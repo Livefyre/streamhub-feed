@@ -1,6 +1,7 @@
 #example {
     position:relative;
     overflow-y: scroll;
+    max-height:500px;
 }
 a {
     text-decoration: none;
