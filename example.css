@@ -9,6 +9,7 @@ a {
     background-color:white;
     margin: 10px;
     overflow-x: hidden;
+    text-align:left;
 }
 #example .content {
   -webkit-transition-duration: 1s;
