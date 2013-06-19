@@ -1,101 +1,73 @@
 # streamhub-feed
 
-streamhub-feed is a streamhub-sdk plugin that shows social content in a simple feed.
+streamhub-feed is a StreamHub App that shows social content like comments, photos, and tweets in a simple feed.
 
-## Views:
-The plugin provides a view called ```FeedView``` which lays out the social content, and updates it when new
-data is available on the stream.
+## Getting Started
 
-## To run the example site:
+The quickest way to use streamhub-feed is to use the built version hosted on Livefyre's CDN.
 
-    $ git clone git@github.com:genehallman/streamhub-feed.git
-    $ cd streamhub-feed
-    $ npm install
-    $ npm start
+### Dependencies
 
-+ To see the demo, browse to [localhost:8080](http://localhost:8080)
-+ To run the tests, browse to [localhost:8080/tests/index.html](http://localhost:8080/tests/index.html)
-+ To see the docs, browse to [localhost:8080/docs/index.html](http://localhost:8080/docs/index.html)
+streamhub-feed depends on [streamhub-sdk](https://github.com/livefyre/streamhub-sdk). Ensure it's been included in your page.
 
-## To install on your site:
-The easiest way to use the streamhub-feed is to install it via [bower](http://twitter.github.com/bower/) and [requirejs](http://requirejs.org/):
+	<script src="http://livefyre-cdn.s3.amazonaws.com/libs/sdk/v1.0.1-build.147/streamhub-sdk.min.gz.js"></script>
 
-### Install via Bower
-Bower can be used to automatically download streamhub-feed and its dependency tree.
+Include streamhub-feed too.
 
-```
-$ bower install git://github.com/genehallman/streamhub-feed.git
-```
+	<script src="http://cdn.livefyre.com/libs/apps/Livefyre/streamhub-feed/v0.0.0.build.1/streamhub-feed.min.js"></script>
+	
+Optionally, include some reasonable default CSS rules for StreamHub Content
 
-### Use via Require.js
-Once you've called bower install, you'll have a suite of components available to you in the ```./components``` directory. These can be accessed via Require.js, as shown below.
+    <link rel="stylesheet" href="http://livefyre-cdn.s3.amazonaws.com/libs/sdk/v1.0.1-build.147/streamhub-sdk.gz.css" />
 
-    <!-- Get requirejs -->
-    <script src="components/requirejs/require.js" type="text/javascript"></script>
-    <!-- Get Livefyre sdk loader -->
-    <script src="http://zor.t402.livefyre.com/wjs/v3.0.sdk/javascripts/livefyre.js"></script>
-    <script type="text/javascript">
-      require.config({
-        baseUrl: 'components',
-        paths: {
-          jquery: 'jquery/jquery',
-          text: 'requirejs-text/text',
-          backbone: 'backbone/backbone',
-          underscore: 'underscore/underscore',
-          mustache: 'mustache/mustache',
-          isotope: 'isotope/jquery.isotope',
-          fyre: 'http://zor.t402.livefyre.com/wjs/v3.0/javascripts/livefyre',
-        },
-        packages: [ {
-          name: 'streamhub-backbone',
-          location: 'streamhub-backbone'
-        },
-        {
-          name: "streamhub-feed",
-          location: "streamhub-feed/src"
-        }],
-        shim: {
-          backbone: {
-              deps: ['underscore', 'jquery'],
-              exports: 'Backbone'
-          },
-          underscore: {
-              exports: '_'
-          },
-          isotope: {
-              deps: ['jquery']
-          },
-          fyre: {
-              exports: 'fyre'
-          },
-        }
-      });
-      // Now to load the example
-      require(['streamhub-backbone', 'streamhub-feed'],
-          function(Hub, View) {
-              fyre.conv.load({network: "network.fyre.co"}, [{app: 'sdk'}], function(sdk) {
-              var col = window.col = new Hub.Collection().setRemote({
-                  sdk: sdk,
-                  siteId: "12345",
-                  articleId: "article_1"
-              });
-              
-              var feedCol = window.feedCol = new Hub.Collection();
-              
-              col.on('initialDataLoaded', function() {
-                  feedCol.setRemote({
-                      sdk: sdk,
-                      siteId: "12345",
-                      articleId: "article_2"
-                  });
-              }, this);
-              
-              var view = new View({
-                  collection: col,
-                  el: document.getElementById("example"),
-                  feedCollection:feedCol
-              });
-              view.render();
-          });
-      });
-    </script>
+### Usage
+
+1. Require streamhub-sdk and streamhub-feed
+
+        var Hub = Livefyre.require('streamhub-sdk'),
+            FeedView = Livefyre.require('streamhub-feed');
+    
+2. Create a FeedView, passing the DOMElement to render in
+
+        var feedView = new FeedView({
+            el: document.getElementById('feed')
+        });
+    
+3. An empty feed is no fun, so use the SDK to create a StreamManager for a Livefyre Collection
+
+        var streamManager = Hub.StreamManager.create.livefyreStreams({
+            network: "labs.fyre.co",
+            siteId: 315833,
+            articleId: 'example'
+        });
+    
+4. And bind the streamManager to your feed and start it up
+
+        streamManager.bind(feedView).start();
+
+You now have a Feed! See this all in action on [this jsfiddle](http://jsfiddle.net/tr2R7/1/).
+
+## Local Development
+
+Instead of using a built version of streamhub-feed from Livefyre's CDN, you may wish to fork, develop on the repo locally, or include it in your existing JavaScript application.
+
+Clone this repo
+
+    git clone https://github.com/Livefyre/streamhub-feed
+
+Development dependencies are managed by [npm](https://github.com/isaacs/npm), which you should install first.
+
+With npm installed, install streamhub-feed's dependencies. This will also download [Bower](https://github.com/bower/bower) and use it to install browser dependencies.
+
+    cd streamhub-feed
+    npm install
+
+This repository's package.json includes a helpful script to launch a web server for development
+
+    npm start
+
+You can now visit [http://localhost:8080/](http://localhost:8080/) to see an example feed loaded via RequireJS.
+
+# StreamHub
+
+[Livefyre StreamHub](http://www.livefyre.com/streamhub/) is used by the world's biggest brands and publishers to power their online Content Communities. StreamHub turns your site into a real-time social experience. Curate images, videos, and Tweets from across the social web, right into live blogs, chats, widgets, and dashboards. Want StreamHub? [Contact Livefyre](http://www.livefyre.com/contact/).
