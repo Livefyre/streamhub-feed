@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="lib/streamhub-sdk/src/css/style.css">
+</head>
+<body>
+	<div id="feed"></div>
+	<!-- scripts -->
+	<script src="lib/requirejs/require.js"></script>
+	<script src="requirejs.conf.js"></script>
+	<script>
+	require(['example'], function (example) {
+		example(document.getElementById('feed'));
+	});
+	</script>
+</body>
+</html>
