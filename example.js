@@ -35,9 +35,17 @@ define(function(require) {
         }];
         
         var token = "";
-        
+        var profileId = "";
         var view = new View({el: el});
-        var streamManager = window.streamManager = new StreamManager({}).bind(view);
+        var viewWrapper = {};
+        viewWrapper.add = function(content, stream) {
+            if ($.inArray(profileId, stream.followers) >= 0) {
+                view.add(content, stream);
+            } else {
+                console.log('content rejected from', stream.articleId);
+            }
+        };
+        var streamManager = window.streamManager = new StreamManager({}).bind(viewWrapper);
         var followsDiv = $('#follows');
         
         var followClick = function(ev) {
@@ -55,9 +63,6 @@ define(function(require) {
 
         var follow = function(link) {
             var id = link.attr('data-streamId');
-            var stream = streamManager.get('main_' + id);
-            stream.start();
-
             link.removeClass('follow');
             link.text('Unfollow');
             link.addClass('unfollow');
@@ -65,20 +70,17 @@ define(function(require) {
 
         var unfollow = function(link) {
             var id = link.attr('data-streamId');
-            var stream = streamManager.get('main_' + id);
-            stream.stop();
-
             link.removeClass('unfollow');
             link.text('Follow');
             link.addClass('follow');
         };
         
         LivefyreAuthClient.getAuthData(streamOpts[0], function(authErr, authData) {
-            var profileId = (((authData || {}).data || {}).profile || {}).id;
+            profileId = (((authData || {}).data || {}).profile || {}).id;
             token = (((authData || {}).data || {}).token || {}).value;
         
 	        for (var i = 0; i < streamOpts.length; i++) {
-	            var holder = $('<div></div>').text(streamOpts[i].title);
+	            var holder = $('<div></div>').text(streamOpts[i].title + " ("+streamOpts[i].articleId+")");
 	                
 	            var link = $('<a>Follow</a>')
 	                .addClass('follow')
@@ -88,30 +90,30 @@ define(function(require) {
 
 	            (function(holder, link, opts) {
 		            Hub.StreamManager.create.livefyreStreams(opts).on('add', function(name, stream) {
-		                var processFollowers = function(streamIn) {
-		                    if ($.inArray(profileId, streamIn.followers)) {
-		                        follow(link);
-		                    } else {
-		                        unfollow(link);
-		                    }
-		                };
-		                var followerStream = new LivefyreStream(stream);
-		                followerStream.start();
-		                followerStream.on('followers', function() {
-		                    processFollowers(followerStream);
-		                    stream.followers = follwerStream.followers;
-		                    followerStream.stop();
-		                });
-		                stream.on('followers', processFollowers);
-		                 
-		                holder.appendTo(followsDiv);
-		                streamManager.set(name + "_" + opts.articleId, stream);
-		                
-		                if (name == "main" && $.inArray(profileId, stream.followers)) {
-		                   follow(link);
-		                } else if (name == "reverse" && $.inArray(profileId, stream.followers)) {
-                           stream.start();
-                        }
+                        streamManager.set(name + "_" + opts.articleId, stream);
+                        stream.on('followers', function(streamIn) {
+                            if ($.inArray(profileId, streamIn.followers) >= 0) {
+                                follow(link);
+                            } else {
+                                unfollow(link);
+                            }
+                        });
+
+		                if (name == "main") {
+		                   if ($.inArray(profileId, stream.followers) >= 0) {
+		                       follow(link);
+		                   }
+		                   stream.start();
+		                } else {
+		                    setTimeout(function() {
+                                holder.appendTo(followsDiv);
+			                    var mainStream = streamManager.get('main_' + opts.articleId);
+			                    if (mainStream && $.inArray(profileId, mainStream.followers) >= 0) {
+			                        stream.start();
+			                    }
+		                    }, 800);
+		                }
+                        
 		            });
 	            }(holder, link, streamOpts[i]));
 	        }
