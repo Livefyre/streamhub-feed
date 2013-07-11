@@ -1,5 +1,5 @@
 {
-  "name": "streamhub-feed",
+  "name": "streamhub-personalized",
   "version": "0.0.0",
   "main": [
     "./src/main.js"
