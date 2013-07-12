@@ -1,5 +1,5 @@
 {
-  "name": "streamhub-personalized",
+  "name": "streamhub-feed",
   "description": "Livefyre Feed",
   "author": "Livefyre <support@livefyre.com>",
   "version": "0.0.0",
@@ -17,6 +17,6 @@
     "start": "./node_modules/http-server/bin/http-server ."
   },
   "streamhub": {
-    "sampleImages": ["https://raw.github.com/Livefyre/streamhub-personalized/master/images/sample.png"]
+    "sampleImages": ["https://raw.github.com/Livefyre/streamhub-feed/master/images/sample.png"]
   }
 }

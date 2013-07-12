@@ -1,123 +1,18 @@
 define(function(require) {
     var Hub = require('streamhub-sdk');
-    var StreamHelper = require('streamhub-personalized');
-    var StreamManager = require('streamhub-sdk/stream-manager');
-    var LivefyreStream = require('streamhub-sdk/streams/livefyre-stream');
-    var View = require('streamhub-sdk/views/list-view');
-    var LivefyreAuthClient = require('streamhub-sdk/clients/livefyre-auth-client');
-    var LivefyreWriteClient = require('streamhub-sdk/clients/livefyre-write-client');
+    var View = require('streamhub-feed');
 
     return function(el) {
-        var streamOpts = [{
+        var streams = Hub.StreamManager.create.livefyreStreams({
             network: "labs-t402.fyre.co",
             environment: "t402.livefyre.com",
             siteId: "303827",
-            articleId: 'sh_col_51_1366914813',
-            title: 'Awesome Conv 1'
-        },{
-            network: "labs-t402.fyre.co",
-            environment: "t402.livefyre.com",
-            siteId: "303827",
-            articleId: 'labs_demo_fire',
-            title: 'Fire Demo'
-        },{
-            network: "labs-t402.fyre.co",
-            environment: "t402.livefyre.com",
-            siteId: "303827",
-            articleId: 'labs_demo_social_baseball',
-            title: 'Social Baseball'
-        },{
-            network: "labs-t402.fyre.co",
-            environment: "t402.livefyre.com",
-            siteId: "303827",
-            articleId: 'sh_col_54_1367887407',
-            title: 'Awesome Conv 2'
-        }];
-        
-        var token = "";
-        var profileId = "";
-        var view = new View({el: el});
-        var viewWrapper = {};
-        viewWrapper.add = function(content, stream) {
-            if ($.inArray(profileId, stream.followers) >= 0) {
-                view.add(content, stream);
-            } else {
-                console.log('content rejected from', stream.articleId);
-            }
-        };
-        var streamManager = window.streamManager = new StreamManager({}).bind(viewWrapper);
-        var followsDiv = $('#follows');
-        
-        var followClick = function(ev) {
-            var id = $(ev.target).attr('data-streamId');
-            var stream = streamManager.get('main_' + id);
-            
-            if ($(ev.target).hasClass('follow')) {
-                follow($(ev.target));
-                LivefyreWriteClient.follow($.extend({lftoken: token}, stream.opts));
-            } else {
-                unfollow($(ev.target));
-                LivefyreWriteClient.unfollow($.extend({lftoken: token}, stream.opts));
-            }
-        };
-
-        var follow = function(link) {
-            var id = link.attr('data-streamId');
-            link.removeClass('follow');
-            link.text('Unfollow');
-            link.addClass('unfollow');
-        };
-
-        var unfollow = function(link) {
-            var id = link.attr('data-streamId');
-            link.removeClass('unfollow');
-            link.text('Follow');
-            link.addClass('follow');
-        };
-        
-        LivefyreAuthClient.getAuthData(streamOpts[0], function(authErr, authData) {
-            profileId = (((authData || {}).data || {}).profile || {}).id;
-            token = (((authData || {}).data || {}).token || {}).value;
-        
-	        for (var i = 0; i < streamOpts.length; i++) {
-	            var holder = $('<div></div>').text(streamOpts[i].title + " ("+streamOpts[i].articleId+")");
-	                
-	            var link = $('<a>Follow</a>')
-	                .addClass('follow')
-	                .click(followClick)
-	                .attr('data-streamId', streamOpts[i].articleId)
-	                .appendTo(holder);
-
-	            (function(holder, link, opts) {
-		            Hub.StreamManager.create.livefyreStreams(opts).on('add', function(name, stream) {
-                        streamManager.set(name + "_" + opts.articleId, stream);
-                        stream.on('followers', function(streamIn) {
-                            if ($.inArray(profileId, streamIn.followers) >= 0) {
-                                follow(link);
-                            } else {
-                                unfollow(link);
-                            }
-                        });
-
-		                if (name == "main") {
-		                   if ($.inArray(profileId, stream.followers) >= 0) {
-		                       follow(link);
-		                   }
-		                   stream.start();
-		                } else {
-		                    setTimeout(function() {
-                                holder.appendTo(followsDiv);
-			                    var mainStream = streamManager.get('main_' + opts.articleId);
-			                    if (mainStream && $.inArray(profileId, mainStream.followers) >= 0) {
-			                        stream.start();
-			                    }
-		                    }, 800);
-		                }
-                        
-		            });
-	            }(holder, link, streamOpts[i]));
-	        }
+            articleId: 'sh_col_51_1366914813'
         });
+        var view = new View({el: el});
+        
+        streams.bind(view).start();
+         
         return view;
     };
 });

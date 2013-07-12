@@ -10,7 +10,7 @@ require.config({
     'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery'
   },
   packages: [{
-     name: "streamhub-personalized",
+     name: "streamhub-feed",
      location: "./src"
   },{
      name: "streamhub-sdk",
