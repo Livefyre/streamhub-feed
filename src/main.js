@@ -1,3 +1,3 @@
-define(['streamhub-sdk/views/list-view'], function(ListView) {
+define(['streamhub-sdk/content/views/content-list-view'], function(ListView) {
     return ListView;
 });

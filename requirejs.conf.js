@@ -7,14 +7,34 @@ require.config({
     hgn: 'lib/requirejs-hogan-plugin/hgn',
     jasmine: 'lib/jasmine/lib/jasmine-core/jasmine',
     'jasmine-html': 'lib/jasmine/lib/jasmine-core/jasmine-html',
-    'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery'
+    'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery',
+    inherits: 'lib/inherits/inherits',
+    'event-emitter': 'lib/event-emitter/src/event-emitter'
   },
   packages: [{
      name: "streamhub-feed",
      location: "./src"
   },{
-     name: "streamhub-sdk",
-     location: "lib/streamhub-sdk/src/"
+    name: "streamhub-sdk",
+    location: "lib/streamhub-sdk/src/"
+  },{
+    name: "streamhub-sdk/modal",
+    location: "lib/streamhub-sdk/src/modal"
+  },{
+    name: "streamhub-sdk/collection",
+    location: 'lib/streamhub-sdk/src/collection'
+  },{
+    name: "streamhub-sdk/auth",
+    location: 'lib/streamhub-sdk/src/auth'
+  },{
+    name: "streamhub-sdk/content",
+    location: 'lib/streamhub-sdk/src/content'
+  },{
+    name: 'streamhub-sdk-tests',
+    location: 'lib/streamhub-sdk/tests/'
+  },{
+    name: "stream",
+    location: "lib/stream/src"
   }],
   shim: {
     jquery: {
