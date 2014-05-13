@@ -12,9 +12,14 @@ require.config({
     'event-emitter': 'lib/event-emitter/src/event-emitter',
     debug: 'lib/debug/debug'
   },
+  map: {
+    '*': {
+      'debug': 'streamhub-sdk/debug'
+    }
+  },
   packages: [{
      name: "streamhub-feed",
-     location: "./src"
+     location: "src"
   },{
     name: "streamhub-sdk",
     location: "lib/streamhub-sdk/src/"
@@ -34,8 +39,17 @@ require.config({
     name: 'streamhub-sdk-tests',
     location: 'lib/streamhub-sdk/tests/'
   },{
+    name: "auth",
+    location: "lib/auth/src"
+  },{
+    name: "livefyre-auth",
+    location: "lib/livefyre-auth/src"
+  },{
     name: "stream",
     location: "lib/stream/src"
+  },{
+    name: "thread",
+    location: "lib/thread/src"
   },{
     name: "view",
     location: "lib/view/src",

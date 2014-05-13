@@ -6,14 +6,17 @@
   ],
   "dependencies": {
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#~2.11",
-    "requirejs": "~2.1.5",
-    "cajon": "git://github.com/requirejs/cajon.git#~0.1.11"
+    "thread": "git://github.com/cheung31/thread.git",
+    "requirejs": "~2.1.5"
   },
   "devDependencies": {
+    "almond": "0.2.5",
+    "cajon": "git://github.com/requirejs/cajon.git#~0.1.11",
     "jasmine": "*",
     "jasmine-jquery": "*",
-    "almond": "0.2.5",
     "require-css": "~0.1.4"
+    "livefyre-auth": "git://github.com/livefyre/livefyre-auth.git",
+    "livefyre-bootstrap": "git://github.com/Livefyre/livefyre-bootstrap.git#v0.3.2"
   },
   "streamhub": {
     "background": "https://raw.github.com/Livefyre/streamhub-feed/master/images/cover.png",
@@ -24,10 +27,5 @@
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample2.png",
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample3.png"
     ]
-  },
-  "resolutions": {
-    "jquery": "~1.10.1",
-    "view": "~1.1",
-    "base64": "~0.4.0"
   }
 }
