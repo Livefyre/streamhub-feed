@@ -9,6 +9,7 @@ require.config({
     'jasmine-html': 'lib/jasmine/lib/jasmine-core/jasmine-html',
     'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery',
     inherits: 'lib/inherits/inherits',
+    'observer': 'lib/observer/src/observer',
     'event-emitter': 'lib/event-emitter/src/event-emitter',
     'debug': 'lib/debug/debug'
   },

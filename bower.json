@@ -6,6 +6,8 @@
   ],
   "dependencies": {
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#~2.11",
+    "jquery": "~1.9.0",
+    "observer": "git@github.com:Livefyre/Observer.git#0.1.0",
     "thread": "git://github.com/cheung31/thread.git",
     "requirejs": "~2.1.5"
   },
