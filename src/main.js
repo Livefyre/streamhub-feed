@@ -3,6 +3,7 @@
 var inherits = require('inherits');
 var ListView = require('streamhub-sdk/views/list-view');
 var ContentThreadView = require('thread');
+var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
 
 var FeedView = function (opts) {
     opts = opts || {};
@@ -20,7 +21,7 @@ FeedView.prototype.add = function (content) {
 FeedView.prototype._createContentView = function (content) {
     return new ContentThreadView({
         content: content,
-        themeClass: this.themeClass
+        rootContentViewFactory: new FeedContentViewFactory()
     });
 };
 

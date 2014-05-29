@@ -50,9 +50,12 @@ require.config({
     location: "lib/view/src",
     main: "view"
   },{
-    name: "css",
-    location: "lib/require-css",
-    main: "css"
+    name: "streamhub-editor",
+    location: "lib/streamhub-editor/src/javascript",
+    main: "editor"
+  },{
+    name: "streamhub-editor/templates",
+    location: "lib/streamhub-editor/src/templates"
   }],
   shim: {
     jquery: {
