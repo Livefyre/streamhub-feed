@@ -28,5 +28,8 @@
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample2.png",
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample3.png"
     ]
+  },
+  "resolutions": {
+    "view": "~1.3"
   }
 }
