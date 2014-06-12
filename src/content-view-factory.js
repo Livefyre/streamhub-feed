@@ -1,6 +1,5 @@
-'use strict';
-
 var inherits = require('inherits');
+var Command = require('streamhub-sdk/ui/command');
 var FeedContentView = require('streamhub-feed/content-view');
 var BaseContentViewFactory = require('streamhub-sdk/content/content-view-factory');
 var Content = require('streamhub-sdk/content');
@@ -13,6 +12,10 @@ var asLivefyreContentView = require('streamhub-sdk/content/views/mixins/livefyre
 var asTwitterContentView = require('streamhub-sdk/content/views/mixins/twitter-content-view-mixin');
 var asFacebookContentView = require('streamhub-sdk/content/views/mixins/facebook-content-view-mixin');
 var asInstagramContentView = require('streamhub-sdk/content/views/mixins/instagram-content-view-mixin');
+var AuthEditor = require('streamhub-editor/auth-editor');
+var TYPE_URNS = require('streamhub-sdk/content/types/type-urns');
+
+'use strict';
 
 var FeedContentViewFactory = function (opts) {
     opts = opts || {};
@@ -30,42 +33,62 @@ inherits(FeedContentViewFactory, BaseContentViewFactory);
  * type function, useful for conditional view selection.).
  */
 FeedContentViewFactory.prototype.contentRegistry = [
-    { type: LivefyreTwitterContent, mixins: [asLivefyreContentView, asTwitterContentView],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content:types:livefyre-twitter' },
+    { type: LivefyreTwitterContent, mixins: [asTwitterContentView],
+        typeUrn: TYPE_URNS.LIVEFYRE_TWITTER },
     { type: LivefyreFacebookContent, mixins: [asLivefyreContentView, asFacebookContentView],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content:types:livefyre-facebook' },
+        typeUrn: TYPE_URNS.LIVEFYRE_FACEBOOK},
     { type: LivefyreInstagramContent, mixins: [asLivefyreContentView, asInstagramContentView],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content:types:livefyre-instagram' },
-    { type: TwitterContent, mixins: [asLivefyreContentView, asTwitterContentView],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content:types:twitter' },
+        typeUrn: TYPE_URNS.LIVEFYRE_INSTAGRAM },
+    { type: TwitterContent, mixins: [asTwitterContentView],
+        typeUrn: TYPE_URNS.TWITTER },
     { type: LivefyreContent, mixins: [asLivefyreContentView],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content:types:livefyre' },
+        typeUrn: TYPE_URNS.LIVEFYRE },
     { type: Content, mixins: [],
-        typeUrn: 'urn:livefyre:js:streamhub-sdk:content' }
+        typeUrn: TYPE_URNS.CONTENT }
 ];
 
 FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     opts = opts || {};
-    opts.themeClass = this._themeClass;
+    var themeClass = opts.themeClass || this._themeClass;
 
     var likeCommand = opts.likeCommand || this._createLikeCommand(content, opts.liker);
     var replyCommand = opts.replyCommand || this._createReplyCommand(content, opts.replyer);
     var shareCommand = opts.shareCommand || this._createShareCommand(content, opts.sharer);
+    var editorView = opts.editorView || new AuthEditor({
+        collection: content.collection,
+        contentParentId: content.id
+    });
 
-    var contentView = new FeedContentView({
+    var contentViewOpts = {
+        themeClass: themeClass,
         content : content,
+        attachmentsView: opts.attachmentsView,
+        editorView: editorView,
         likeCommand: likeCommand,
         replyCommand: replyCommand,
         shareCommand: shareCommand
-    });
+    };
+    var contentView = new FeedContentView(contentViewOpts);
 
     var sourceTypeMixins = this._getSourceTypeMixinsForContent(content);
     for (var i=0; i < sourceTypeMixins.length; i++) {
         var asSourceTypeView = sourceTypeMixins[i];
-        asSourceTypeView(contentView);
+        asSourceTypeView(contentView, contentViewOpts);
     }
 
     return contentView;
+};
+
+FeedContentViewFactory.prototype._createReplyCommand = function (content, replyer) {
+    var replyCommand;
+    if (typeof replyer === 'function') {
+        replyCommand = new Command(function () {
+            replyer(content);
+        });
+    } else {
+        replyCommand = new Command(function () {});
+    }
+    return replyCommand;
 };
 
 FeedContentViewFactory.prototype._getSourceTypeMixinsForContent = function (content) {

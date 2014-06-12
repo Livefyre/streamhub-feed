@@ -18,7 +18,7 @@ require.config({
      location: "src"
   },{
     name: "streamhub-sdk",
-    location: "lib/streamhub-sdk/src/"
+    location: "lib/streamhub-sdk/src"
   },{
     name: "streamhub-sdk/modal",
     location: "lib/streamhub-sdk/src/modal"
@@ -33,7 +33,7 @@ require.config({
     location: 'lib/streamhub-sdk/src/content'
   },{
     name: 'streamhub-sdk-tests',
-    location: 'lib/streamhub-sdk/tests/'
+    location: 'lib/streamhub-sdk/tests'
   },{
     name: "auth",
     location: "lib/auth/src"
