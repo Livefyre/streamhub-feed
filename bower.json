@@ -8,7 +8,7 @@
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#mixins",
     "jquery": "~1.10.2",
     "observer": "git://github.com/Livefyre/Observer.git#0.1.0",
-    "thread": "git://github.com/cheung31/thread.git#editor",
+    "thread": "git://github.com/cheung31/thread.git#refactor",
     "requirejs": "~2.1.5"
   },
   "devDependencies": {
@@ -30,6 +30,7 @@
     ]
   },
   "resolutions": {
-    "view": "~1.3"
+    "view": "~1.3",
+    "streamhub-sdk": "mixins"
   }
 }
