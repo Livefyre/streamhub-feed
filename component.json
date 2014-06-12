@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "jasmine": "*",
-    "jasmine-jquery": "*"
+    "jasmine-jquery": "*",
+    "almond": "0.2.5"
   },
   "streamhub": {
     "background": "https://raw.github.com/Livefyre/streamhub-feed/master/images/cover.png",
