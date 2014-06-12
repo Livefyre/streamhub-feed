@@ -1,12 +1,13 @@
 {
   "name": "streamhub-feed",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "main": [
     "./src/main.js"
   ],
   "dependencies": {
-    "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#~2.5",
-    "requirejs": "~2.1.5"
+    "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#~2.11",
+    "requirejs": "~2.1.5",
+    "cajon": "git://github.com/requirejs/cajon.git#~0.1.11"
   },
   "devDependencies": {
     "jasmine": "*",
@@ -21,5 +22,10 @@
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample2.png",
       "https://raw.github.com/Livefyre/streamhub-feed/master/images/sample3.png"
     ]
+  },
+  "resolutions": {
+    "jquery": "~1.10.1",
+    "view": "~1.1",
+    "base64": "~0.4.0"
   }
 }

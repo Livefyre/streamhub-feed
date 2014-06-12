@@ -9,7 +9,8 @@ require.config({
     'jasmine-html': 'lib/jasmine/lib/jasmine-core/jasmine-html',
     'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery',
     inherits: 'lib/inherits/inherits',
-    'event-emitter': 'lib/event-emitter/src/event-emitter'
+    'event-emitter': 'lib/event-emitter/src/event-emitter',
+    debug: 'lib/debug/debug'
   },
   packages: [{
      name: "streamhub-feed",
@@ -39,6 +40,9 @@ require.config({
     name: "view",
     location: "lib/view/src",
     main: "view"
+  },{
+    name: "auth",
+    location: "lib/auth/src"
   }],
   shim: {
     jquery: {
