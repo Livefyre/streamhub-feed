@@ -30,7 +30,7 @@
     ]
   },
   "resolutions": {
-    "view": "~1.3",
+    "view": "composite-view",
     "streamhub-sdk": "mixins"
   }
 }
