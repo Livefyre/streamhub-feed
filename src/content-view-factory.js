@@ -61,7 +61,7 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
 
     var contentViewOpts = {
         themeClass: themeClass,
-        content : content,
+        content: content,
         attachmentsView: opts.attachmentsView,
         editorView: editorView,
         likeCommand: likeCommand,

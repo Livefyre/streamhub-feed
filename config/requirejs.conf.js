@@ -55,8 +55,19 @@ require.config({
     location: "lib/streamhub-editor/src/javascript",
     main: "editor"
   },{
+   name: 'streamhub-editor/styles',
+   location: 'lib/streamhub-editor/src/styles'
+  },{
     name: "streamhub-editor/templates",
     location: "lib/streamhub-editor/src/templates"
+  },{
+    name: "css",
+    location: "lib/require-css",
+    main: "css"
+  },{
+    name: "less",
+    location: "lib/require-less",
+    main: "less"
   }],
   shim: {
     jquery: {
@@ -71,6 +82,21 @@ require.config({
     },
     'jasmine-jquery': {
         deps: ['jquery', 'jasmine']
+    }
+  },
+  css: {
+    clearFileEachBuild: 'dist/streamhub-feed.min.css',
+    transformEach: [{
+      requirejs: 'lib/livefyre-package-attribute/tools/prefix-css-requirejs',
+      node: 'lib/livefyre-package-attribute/tools/prefix-css-node'
+    }]
+  },
+  less: {
+    browserLoad: 'dist/streamhub-feed.min',
+    paths: ['lib'],
+    relativeUrls: true,
+    modifyVars: {
+      '@icon-font-path': "\"http://cdn.livefyre.com/libs/livefyre-bootstrap/v1.1.0/fonts/\""
     }
   },
   urlArgs: "_=" +  (new Date()).getTime()

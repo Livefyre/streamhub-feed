@@ -6,6 +6,7 @@ var ContentFooterView = require('streamhub-sdk/content/views/content-footer-view
 var TiledAttachmentListView = require('streamhub-sdk/content/views/tiled-attachment-list-view');
 var BlockAttachmentListView = require('streamhub-sdk/content/views/block-attachment-list-view');
 var ContentEditorView = require('streamhub-editor/auth-editor');
+var feedContentStyles = require('less!streamhub-feed/css/style.less');
 
 'use strict';
 
