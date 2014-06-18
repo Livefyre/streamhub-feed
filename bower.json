@@ -33,6 +33,8 @@
   },
   "resolutions": {
     "view": "~1.3",
-    "require-css": "transformEach2"
+    "require-css": "transformEach2",
+    "streamhub-sdk": "mixins",
+    "auth": "~0.1.0"
   }
 }
