@@ -1,12 +1,16 @@
 var inherits = require('inherits');
+var Auth = require('auth');
 var ListView = require('streamhub-sdk/views/list-view');
 var ContentThreadView = require('thread');
 var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
+var threadViewStyles = require('less!streamhub-feed/css/style.less');
 
 'use strict';
 
 var FeedView = function (opts) {
     opts = opts || {};
+    this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
+    this.comparator = opts.comparator || this.comparator;
     ListView.call(this, opts);
 };
 inherits(FeedView, ListView);
@@ -16,10 +20,30 @@ FeedView.prototype.add = function (content) {
     ListView.prototype.add.call(this, contentView);
 };
 
+FeedView.prototype.comparator = ListView.prototype.comparators.CREATEDAT_DESCENDING;
+
+/**
+ * Called automatically by the Writable base class when .write() is called
+ * @private
+ * @param content {Content} Content to display in the ListView
+ * @param requestMore {function} A function to call when done writing, so
+ *     that _write will be called again with more data
+ */
+FeedView.prototype._write = function (content, requestMore) {
+    if (content.author.id === (Auth.get('livefyre') && Auth.get('livefyre').get('id'))) {
+        this.add(content);
+    } else {
+        this.queue.write(content);
+    }
+
+    requestMore();
+};
+
 FeedView.prototype._createContentView = function (content) {
     return new ContentThreadView({
         content: content,
         contentViewFactory: new FeedContentViewFactory(),
+        queueInitial: this._queueInitial
     });
 };
 

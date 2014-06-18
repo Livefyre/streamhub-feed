@@ -85,11 +85,8 @@ require.config({
     }
   },
   css: {
-    clearFileEachBuild: 'dist/streamhub-feed.min.css',
-    transformEach: [{
-      requirejs: 'lib/livefyre-package-attribute/tools/prefix-css-requirejs',
-      node: 'lib/livefyre-package-attribute/tools/prefix-css-node'
-    }]
+    clearFileEachBuild: 'dist/streamhub-feed.min.css'
+    ,transformEach: []
   },
   less: {
     browserLoad: 'dist/streamhub-feed.min',

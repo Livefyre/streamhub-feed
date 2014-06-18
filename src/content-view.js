@@ -20,10 +20,10 @@ inherits(FeedContentView, ContentView);
 FeedContentView.prototype.events = ContentView.prototype.events.extended({
     'click': function (e) {
         if ($(e.target).hasClass('hub-content-reply')) {
-            this.toggleReplies(true);
+            this.toggleReplies();
         }
     },
-    'writeSuccess.hub': function (e) {
+    'writeContent.hub': function (e) {
         this.toggleReplies(false);
     }
 });

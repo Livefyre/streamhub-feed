@@ -2,6 +2,7 @@ var FeedView = require('streamhub-feed');
 var Content = require('streamhub-sdk/content');
 var Collection = require('streamhub-sdk/collection');
 var ContentThreadView = require('thread');
+var ListView = require('streamhub-sdk/views/list-view');
 
 'use strict';
 
@@ -19,5 +20,9 @@ describe('FeedView', function () {
         feedView.add(content);
         expect(feedView.views.length).toBe(1);
         expect(feedView.views[0] instanceof ContentThreadView);
+    });
+
+    it('has a default comparator', function () {
+        expect(feedView.comparator).toBe(ListView.prototype.comparators.CREATEDAT_DESCENDING);
     });
 });

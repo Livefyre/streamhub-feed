@@ -55,11 +55,11 @@ describe('FeedContentView', function () {
         var replyButtonEl = contentView.$el.find('.hub-content-reply');
         spyOn(contentView, 'toggleReplies').andCallThrough();
         replyButtonEl.trigger('click');
-        expect(contentView.toggleReplies).toHaveBeenCalledWith(true);
+        expect(contentView.toggleReplies).toHaveBeenCalled();
         expect(contentView._editorView.$el.css('display')).toBe('block');
     });
 
-    it('hides the reply editor upon successful post', function () {
+    it('hides the reply editor upon post', function () {
         contentView.render();
 
         // Toggle on editor
@@ -69,7 +69,7 @@ describe('FeedContentView', function () {
 
         // writeSuccess.hub
         spyOn(contentView, 'toggleReplies').andCallThrough();
-        contentView._editorView.$el.trigger('writeSuccess.hub');
+        contentView._editorView.$el.trigger('writeContent.hub');
         expect(contentView.toggleReplies).toHaveBeenCalledWith(false);
         expect(contentView._editorView.$el.css('display')).toBe('none');
     });
