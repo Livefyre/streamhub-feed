@@ -21,8 +21,6 @@ var FeedContentViewFactory = function (opts) {
     opts = opts || {};
 
     BaseContentViewFactory.call(this, opts);
-
-    this._themeClass = 'content-feed';
 };
 inherits(FeedContentViewFactory, BaseContentViewFactory);
 
@@ -49,7 +47,6 @@ FeedContentViewFactory.prototype.contentRegistry = [
 
 FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     opts = opts || {};
-    var themeClass = opts.themeClass || this._themeClass;
 
     var likeCommand = opts.likeCommand || this._createLikeCommand(content, opts.liker);
     var replyCommand = opts.replyCommand || this._createReplyCommand(content, opts.replyer);
@@ -60,7 +57,6 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     });
 
     var contentViewOpts = {
-        themeClass: themeClass,
         content: content,
         attachmentsView: opts.attachmentsView,
         editorView: editorView,
