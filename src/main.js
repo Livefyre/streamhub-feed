@@ -4,6 +4,7 @@ var ListView = require('streamhub-sdk/views/list-view');
 var ContentThreadView = require('thread');
 var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
 var threadViewStyles = require('less!streamhub-feed/css/style.less');
+var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
 
 'use strict';
 
@@ -11,6 +12,7 @@ var FeedView = function (opts) {
     opts = opts || {};
     this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
     this.comparator = opts.comparator || this.comparator;
+    hasAttachmentModal(this, opts.modal);
     ListView.call(this, opts);
 };
 inherits(FeedView, ListView);
