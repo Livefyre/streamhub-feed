@@ -6,6 +6,7 @@
   baseUrl: '..',
   name: 'streamhub-feed',
   include: ['almond'],
+  exclude: ['css/normalize'],
   out: '../dist/streamhub-feed.min.js',
   preserveLicenseComments: false,
   optimize: 'uglify2',

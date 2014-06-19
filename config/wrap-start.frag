@@ -15,7 +15,7 @@
         //result to a property on the global.
         var f = factory();
         root.Livefyre = root.Livefyre || {};
-        root.Livefyre['livefyre-auth'] = f;
+        root.Livefyre['streamhub-feed'] = f;
     }
 }(this, function () {
     //almond, and your modules will be inlined here

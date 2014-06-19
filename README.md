@@ -6,46 +6,39 @@ streamhub-feed is a StreamHub App that shows social content like comments, photo
 
 The quickest way to use streamhub-feed is to use the built version hosted on Livefyre's CDN.
 
-### Dependencies
+Add Livefyre.js to your page
 
-streamhub-feed depends on [streamhub-sdk](https://github.com/livefyre/streamhub-sdk). Ensure it's been included in your page.
+```html
+<script src="http://cdn.livefyre.com/Livefyre.js"></script>
+```
 
-	<script src="http://livefyre-cdn.s3.amazonaws.com/libs/sdk/v1.0.1-build.147/streamhub-sdk.min.gz.js"></script>
+Make sure there is an element for the feed to render in
 
-Include streamhub-feed too.
+```html
+<div id="feed"></div>
+```
 
-	<script src="http://cdn.livefyre.com/libs/apps/Livefyre/streamhub-feed/v0.0.0.build.1/streamhub-feed.min.js"></script>
-	
-Optionally, include some reasonable default CSS rules for StreamHub Content
+Now require Feed, construct, and get a Collection to pipe in
 
-    <link rel="stylesheet" href="http://livefyre-cdn.s3.amazonaws.com/libs/sdk/v1.0.1-build.147/streamhub-sdk.gz.css" />
+```html
+<script>
+Livefyre.require(['streamhub-feed#2.1.1', 'streamhub-sdk#2'],
+function (Feed, SDK) {
+    var feed = new Feed({
+        el: document.getElementById('feed'),
+    });
+    var collection = new SDK.Collection({
+        network: "labs.fyre.co",
+        environment: "livefyre.com",
+        siteId: "315833",
+        articleId: 'livefyre-tweets'
+    });
+    collection.pipe(feed);
+});
+</script>
+```
 
-### Usage
-
-1. Require streamhub-sdk and streamhub-feed
-
-        var Hub = Livefyre.require('streamhub-sdk'),
-            FeedView = Livefyre.require('streamhub-feed');
-    
-2. Create a FeedView, passing the DOMElement to render in
-
-        var feedView = new FeedView({
-            el: document.getElementById('feed')
-        });
-    
-3. An empty feed is no fun, so use the SDK to create a StreamManager for a Livefyre Collection
-
-        var streamManager = Hub.StreamManager.create.livefyreStreams({
-            network: "labs.fyre.co",
-            siteId: 315833,
-            articleId: 'example'
-        });
-    
-4. And bind the streamManager to your feed and start it up
-
-        streamManager.bind(feedView).start();
-
-You now have a Feed! See this all in action on [this jsfiddle](http://jsfiddle.net/tr2R7/1/).
+Check out this [live example](http://codepen.io/gobengo/pen/gIibE)
 
 ## Local Development
 

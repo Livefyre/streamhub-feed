@@ -43,6 +43,10 @@ require.config({
   },{
     name: "auth",
     location: "lib/auth/src"
+  },{
+    name: "css",
+    location: "lib/require-css",
+    main: "css"
   }],
   shim: {
     jquery: {

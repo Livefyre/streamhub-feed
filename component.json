@@ -1,6 +1,6 @@
 {
   "name": "streamhub-feed",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": [
     "./src/main.js"
   ],
@@ -12,7 +12,8 @@
   "devDependencies": {
     "jasmine": "*",
     "jasmine-jquery": "*",
-    "almond": "0.2.5"
+    "almond": "0.2.5",
+    "require-css": "~0.1.4"
   },
   "streamhub": {
     "background": "https://raw.github.com/Livefyre/streamhub-feed/master/images/cover.png",
