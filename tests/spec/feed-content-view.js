@@ -4,6 +4,7 @@ var FeedContentView = require('streamhub-feed/content-view');
 var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
 var ContentHeaderView = require('streamhub-sdk/content/views/content-header-view');
 var ContentBodyView = require('streamhub-sdk/content/views/content-body-view');
+var ContentErrorView = require('streamhub-sdk/content/views/content-error-view');
 var ContentFooterView = require('streamhub-sdk/content/views/content-footer-view');
 var TiledAttachmentListView = require('streamhub-sdk/content/views/tiled-attachment-list-view');
 var BlockAttachmentListView = require('streamhub-sdk/content/views/block-attachment-list-view');
@@ -39,12 +40,16 @@ describe('FeedContentView', function () {
             expect(contentView._childViews[3] instanceof ContentBodyView).toBe(true);
         });
 
-        it('fifth child view is a FooterView', function () {
-            expect(contentView._childViews[4] instanceof ContentFooterView).toBe(true);
+        it('fifth child view is a ErrorView', function () {
+            expect(contentView._childViews[4] instanceof ContentErrorView).toBe(true);
         });
 
-        it('sixth child view is an AuthEditorView', function () {
-            expect(contentView._childViews[5] instanceof AuthEditorView).toBe(true);
+        it('sixth child view is a FooterView', function () {
+            expect(contentView._childViews[5] instanceof ContentFooterView).toBe(true);
+        });
+
+        it('seventh child view is an AuthEditorView', function () {
+            expect(contentView._childViews[6] instanceof AuthEditorView).toBe(true);
         });
     });
 
