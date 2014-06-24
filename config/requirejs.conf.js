@@ -14,8 +14,11 @@ require.config({
     'debug': 'lib/debug/debug'
   },
   packages: [{
-     name: "streamhub-feed",
-     location: "src"
+    name: "streamhub-feed",
+    location: "src"
+  },{
+    name: "streamhub-feed/styles",
+    location: "src/css"
   },{
     name: "streamhub-sdk",
     location: "lib/streamhub-sdk/src"

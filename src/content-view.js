@@ -2,7 +2,7 @@ var inherits = require('inherits');
 var ContentView = require('streamhub-sdk/content/views/content-view');
 var ContentHeaderView = require('streamhub-sdk/content/views/content-header-view');
 var ContentBodyView = require('streamhub-sdk/content/views/content-body-view');
-var ContentErrorView = require('streamhub-sdk/content/views/content-error-view');
+var ContentErrorView = require('streamhub-feed/content-error-view');
 var ContentFooterView = require('streamhub-sdk/content/views/content-footer-view');
 var TiledAttachmentListView = require('streamhub-sdk/content/views/tiled-attachment-list-view');
 var BlockAttachmentListView = require('streamhub-sdk/content/views/block-attachment-list-view');
@@ -28,11 +28,29 @@ FeedContentView.prototype.events = ContentView.prototype.events.extended({
     },
     'writeContent.hub': function (e) {
         this.toggleReplies(false);
+        this._editorView.reset();
     }
 });
 
 FeedContentView.prototype.toggleReplies = function (show) {
     this._editorView.$el.toggle(show);
+};
+
+FeedContentView.prototype.setEditorValue = function (value) {
+    this._editorView.$el.find('.'+this._editorView.classes.FIELD).val(value);
+};
+
+FeedContentView.prototype.displayError = function (err, actions) {
+    if (! this._errorView) {
+        return;
+    }
+    this._errorView.setError({ error: err, actions: actions });
+    this._errorView.render();
+    this.$el.addClass(this.invalidClass);
+
+    for (var i=0; i < this._footerView._controls.left.length; i++) {
+        this._footerView._controls.left[i].disable();
+    }
 };
 
 FeedContentView.prototype._addInitialChildViews = function (opts) {
