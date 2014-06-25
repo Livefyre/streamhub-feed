@@ -26,7 +26,9 @@ ContentErrorView.prototype.template = template;
 ContentErrorView.prototype.events = View.prototype.events.extended({
     'click': function (e) {
         e.preventDefault();
-        this._action();
+        if ($(e.target).hasClass(this.retryLinkClass) || $(e.target).hasClass(this.editLinkClass)) {
+            this._action();
+        }
     }
 });
 
