@@ -49,13 +49,13 @@ ContentErrorView.prototype.setError = function (opts) {
 
 ContentErrorView.prototype.getErrorType = function () {
     if (this._error && typeof this._error === 'object') {
-        return this._error.body.error_type;
+        return this._error.error_type;
     }
 };
 
 ContentErrorView.prototype.getErrorMessage = function () {
     if (this._error && typeof this._error === 'object') {
-        return this._error.body.msg;
+        return this._error.msg;
     }
     return this._error;
 };
