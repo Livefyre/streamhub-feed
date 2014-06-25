@@ -34,6 +34,7 @@ FeedContentView.prototype.events = ContentView.prototype.events.extended({
 
 FeedContentView.prototype.toggleReplies = function (show) {
     this._editorView.$el.toggle(show);
+    this._editorView.$el.find('.'+this._editorView.classes.FIELD).focus();
 };
 
 FeedContentView.prototype.setEditorValue = function (value) {
@@ -50,6 +51,9 @@ FeedContentView.prototype.displayError = function (err, actions) {
 
     for (var i=0; i < this._footerView._controls.left.length; i++) {
         this._footerView._controls.left[i].disable();
+    }
+    for (var i=0; i < this._footerView._controls.right.length; i++) {
+        this._footerView._controls.right[i].disable();
     }
 };
 
