@@ -10,7 +10,7 @@
             Livefyre.define = define;
         }
 
-        return require('streamhub-sdk');
+        return require('streamhub-feed');
     }
 
 }(this));

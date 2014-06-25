@@ -14,7 +14,7 @@
         //Browser globals case. Just assign the
         //result to a property on the global.
         root.Livefyre = root.Livefyre || {};
-        root.Livefyre['streamhub-sdk'] = factory();
+        root.Livefyre['streamhub-feed'] = factory();
     }
 
     function factory() {
