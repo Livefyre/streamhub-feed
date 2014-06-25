@@ -55,8 +55,7 @@ require.config({
     main: "view"
   },{
     name: "streamhub-editor",
-    location: "lib/streamhub-editor/src/javascript",
-    main: "editor"
+    location: "lib/streamhub-editor/src/javascript"
   },{
    name: 'streamhub-editor/styles',
    location: 'lib/streamhub-editor/src/styles'
