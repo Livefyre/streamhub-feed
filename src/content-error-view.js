@@ -12,7 +12,7 @@ var ContentErrorView = function (opts) {
     if (opts.error) {
         this.setError(opts.error);
     }
-    this._retryFunc = opts.retryFunc;
+    this._actions = opts.actions;
 
     View.call(this, opts);
 };
@@ -27,7 +27,11 @@ ContentErrorView.prototype.events = View.prototype.events.extended({
     'click': function (e) {
         e.preventDefault();
         if ($(e.target).hasClass(this.retryLinkClass) || $(e.target).hasClass(this.editLinkClass)) {
-            this._action();
+            if (this.getErrorType() === this.ERROR_TYPES.DUPLICATE_COMMENT) {
+                this._actions.edit();
+            } else {
+                this._actions.retry();
+            }
         }
     }
 });
@@ -40,11 +44,7 @@ ContentErrorView.prototype.setError = function (opts) {
     opts = opts || {};
 
     this._error = opts.error;
-    if (this.getErrorType() === this.ERROR_TYPES.DUPLICATE_COMMENT) {
-        this._action = opts.actions.edit;
-    } else {
-        this._action = opts.actions.retry;
-    }
+    this._actions = opts.actions;
 };
 
 ContentErrorView.prototype.getErrorType = function () {
