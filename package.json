@@ -28,7 +28,7 @@
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install && npm run build",
     "start": "./node_modules/http-server/bin/http-server .",
-    "build": "./node_modules/requirejs/bin/r.js -o ./tools/build.conf.js",
+    "build": "rm dist/*; ./node_modules/requirejs/bin/r.js -o ./tools/build.conf.js",
     "lessc": "./node_modules/less/bin/lessc -ru --compress src/css/style.{less,css}",
     "test": "./node_modules/karma/bin/karma start tools/karma.conf.js --singleRun"
   },
