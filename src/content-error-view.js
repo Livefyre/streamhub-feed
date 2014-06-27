@@ -10,7 +10,7 @@ var ContentErrorView = function (opts) {
 
     this._content = opts.content;
     if (opts.error) {
-        this.setError(opts.error);
+        this.setError(opts);
     }
     this._actions = opts.actions;
 
@@ -24,17 +24,17 @@ ContentErrorView.prototype.editLinkClass = 'content-edit-link';
 ContentErrorView.prototype.template = template;
 
 ContentErrorView.prototype.events = View.prototype.events.extended({
-    'click': function (e) {
-        e.preventDefault();
-        if ($(e.target).hasClass(this.retryLinkClass) || $(e.target).hasClass(this.editLinkClass)) {
-            if (this.getErrorType() === this.ERROR_TYPES.DUPLICATE_COMMENT) {
-                this._actions.edit();
-            } else {
-                this._actions.retry();
-            }
-        }
-    }
+    'click a': '_handleErrorAction'
 });
+
+ContentErrorView.prototype._handleErrorAction = function (e) {
+    e.preventDefault();
+    if (this.getErrorType() === this.ERROR_TYPES.DUPLICATE_COMMENT) {
+        this._actions.edit();
+    } else {
+        this._actions.retry();
+    }
+};
 
 ContentErrorView.prototype.ERROR_TYPES = {
     DUPLICATE_COMMENT: 'DuplicateCommentError'
