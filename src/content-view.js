@@ -38,7 +38,7 @@ FeedContentView.prototype.toggleReplies = function (show) {
 };
 
 FeedContentView.prototype.setEditorValue = function (value) {
-    this._editorView.$el.find('.'+this._editorView.classes.FIELD).val(value);
+    this._editorView.setContents(value);
 };
 
 FeedContentView.prototype.displayError = function (err, actions) {
