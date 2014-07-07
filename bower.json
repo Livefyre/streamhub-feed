@@ -32,10 +32,10 @@
     ]
   },
   "resolutions": {
-    "livefyre-bootstrap": "fycon-chars-refactor",
-    "streamhub-sdk": "mixins",
     "view": "~1.3",
     "require-css": "transformEach2",
-    "auth": "~0.1.0"
+    "auth": "~0.1.0",
+    "livefyre-bootstrap": "fycon-chars-refactor",
+    "base64": "~0.4.0"
   }
 }
