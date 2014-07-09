@@ -5,7 +5,6 @@ var ContentThreadView = require('thread');
 var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
 var threadViewStyles = require('less!streamhub-feed/css/style.less');
 var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
-var hasMore = require('streamhub-sdk/views/mixins/more-mixin');
 var hasQueue = require('streamhub-sdk/views/mixins/queue-mixin');
 
 'use strict';
@@ -19,7 +18,6 @@ var FeedView = function (opts) {
     var listOpts = $.extend({}, opts);
     listOpts.autoRender = false;
     ListView.call(this, listOpts);
-    hasMore(this, opts);
     hasQueue(this, opts);
     
     opts.autoRender = opts.autoRender === undefined ? true : opts.autoRender;
