@@ -19,10 +19,12 @@ var FeedContentView = function (opts) {
     hasTheme(this, 'content-feed');
     ContentView.call(this, opts);
 
-    this.content.on('change:id', function (contentId) {
-        this._replyButton.enable();
-        this._editorView.setContentParentId(contentId);
-    }.bind(this));
+    if (!this.content.id) {
+        this.content.once('change', function (content) {
+            this._replyButton.enable();
+            this._editorView.setContentParentId(content.id);
+        }.bind(this));
+    }
 };
 inherits(FeedContentView, ContentView);
 
