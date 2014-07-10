@@ -21,6 +21,7 @@ module.exports = function(config) {
       {pattern: 'lib/**/*.js', included: false},
       {pattern: 'lib/**/*.json', included: false},
       {pattern: 'lib/**/*.less', included: false},
+      {pattern: 'lib/**/*.css', included: false},
       {pattern: 'lib/**/*.mustache', included: false},
       {pattern: 'src/**/*.js', included: false},
       {pattern: 'src/**/*.less', included: false},
