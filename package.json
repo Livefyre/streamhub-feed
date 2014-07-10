@@ -2,7 +2,7 @@
   "name": "streamhub-feed",
   "description": "Livefyre Feed",
   "author": "Livefyre <support@livefyre.com>",
-  "version": "3.0.0-alpha.11",
+  "version": "3.0.0",
   "devDependencies": {
     "bower": "*",
     "http-server": "*",
