@@ -1,3 +1,4 @@
+var $ = require('streamhub-sdk/jquery');
 var inherits = require('inherits');
 var ContentView = require('streamhub-sdk/content/views/content-view');
 var ContentHeaderView = require('streamhub-sdk/content/views/content-header-view');

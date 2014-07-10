@@ -1,3 +1,4 @@
+var $ = require('streamhub-sdk/jquery');
 var inherits = require('inherits');
 var Auth = require('auth');
 var ListView = require('streamhub-sdk/views/list-view');
@@ -6,6 +7,7 @@ var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
 var threadViewStyles = require('less!streamhub-feed/css/style.less');
 var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
 var hasQueue = require('streamhub-sdk/views/mixins/queue-mixin');
+var sdkStyle = require('css!streamhub-sdk/css/style.css');
 
 'use strict';
 
