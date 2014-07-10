@@ -8,7 +8,7 @@ for (var file in window.__karma__.files) {
 }
 
 requirejs.config({
-    mainConfigFile: 'requirejs.conf.js',
+    mainConfigFile: 'config/requirejs.conf.js',
     // Karma serves files from '/base'
     baseUrl: '/base/',
 

@@ -1,5 +1,5 @@
 ({
-  mainConfigFile: '../requirejs.conf.js',
+  mainConfigFile: '../config/requirejs.conf.js',
   paths: {
     jquery: 'lib/jquery/jquery.min',
     almond: 'lib/almond/almond'

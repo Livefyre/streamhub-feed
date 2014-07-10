@@ -8,7 +8,7 @@
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#attachments-refactor-rebase",
     "jquery": "~1.10.2",
     "observer": "git://github.com/Livefyre/Observer.git#0.1.0",
-    "thread": "git://github.com/cheung31/thread.git#refactor",
+    "thread": "git://github.com/cheung31/thread.git#master",
     "requirejs": "~2.1.5"
   },
   "devDependencies": {

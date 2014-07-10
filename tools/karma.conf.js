@@ -14,7 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'requirejs.conf.js',
+      'config/requirejs.conf.js',
       // shim for function.bind, needed for phantomjs
       {pattern: 'tests/lib/function.bind.js', included: true},
       {pattern: 'tests/lib/spec-list.js', included: false},
