@@ -18,6 +18,11 @@ var FeedContentView = function (opts) {
 
     hasTheme(this, 'content-feed');
     ContentView.call(this, opts);
+
+    this.content.on('change:id', function (contentId) {
+        this._replyButton.enable();
+        this._editorView.setContentParentId(contentId);
+    }.bind(this));
 };
 inherits(FeedContentView, ContentView);
 

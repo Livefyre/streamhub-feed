@@ -72,6 +72,11 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
         asSourceTypeView(contentView, contentViewOpts);
     }
 
+    // Disable reply button for content without id
+    if (contentView._replyButton && !content.id) {
+        contentView._replyButton.disable();
+    }
+
     return contentView;
 };
 

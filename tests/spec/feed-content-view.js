@@ -17,13 +17,30 @@ describe('FeedContentView', function () {
         collection,
         contentView;
 
-    beforeEach(function () {
-        content = new LivefyreContent({ body: 'hi' });
-        content.collection = new Collection();
-        contentView = new FeedContentViewFactory().createContentView(content);
+    describe('construction', function () {
+
+        beforeEach(function () {
+            content = new LivefyreContent({ body: 'hi' });
+            content.collection = new Collection();
+            contentView = new FeedContentViewFactory().createContentView(content);
+        });
+
+        it('this.content listens for the id:change event; enables the reply button', function () {
+            expect(content.id).toBe(undefined);
+            expect(contentView._replyButton._disabled).toBe(true);
+            content.set({ id: '7485' });
+            expect(contentView._replyButton._disabled).toBe(false);
+        });
     });
 
     describe('Composite child views', function () {
+
+        beforeEach(function () {
+            content = new LivefyreContent({ body: 'hi' });
+            content.collection = new Collection();
+            contentView = new FeedContentViewFactory().createContentView(content);
+        });
+
         it('first child view is a TiledAttachmentListView', function () {
             expect(contentView._childViews[0] instanceof TiledAttachmentListView).toBe(true);
         });
