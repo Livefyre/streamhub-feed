@@ -1,4 +1,4 @@
-var FeedView = require('streamhub-feed');
+var FeedView = require('streamhub-feed/feed-view');
 var Content = require('streamhub-sdk/content');
 var Collection = require('streamhub-sdk/collection');
 var ContentThreadView = require('thread');
