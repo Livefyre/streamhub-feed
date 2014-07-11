@@ -1,64 +1,24 @@
 var $ = require('streamhub-sdk/jquery');
 var inherits = require('inherits');
-var Auth = require('auth');
-var ListView = require('streamhub-sdk/views/list-view');
-var ContentThreadView = require('thread');
-var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
-var threadViewStyles = require('less!streamhub-feed/css/style.less');
-var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
-var hasQueue = require('streamhub-sdk/views/mixins/queue-mixin');
-var sdkStyle = require('css!streamhub-sdk/css/style.css');
+var FeedView = require('streamhub-feed/feed-view');
+var Passthrough = require('stream/passthrough');
 
 'use strict';
 
-var FeedView = function (opts) {
-    opts = opts || {};
-    this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
-    this.comparator = opts.comparator || this.comparator;
-    hasAttachmentModal(this, opts.modal);
+var FeedComponent = function (opts) {
+    Passthrough.call(this);
 
-    var listOpts = $.extend({}, opts);
-    listOpts.autoRender = false;
-    ListView.call(this, listOpts);
-    hasQueue(this, opts);
-    
-    opts.autoRender = opts.autoRender === undefined ? true : opts.autoRender;
-    if (opts.autoRender) {
-        this.render();
+    this._feedView = new FeedView(opts);
+
+    this.pipe(this._feedView);
+    this.more = new Passthrough();
+    this.more.pipe(this._feedView.more);
+    if (opts.collection) {
+        opts.collection.pipe(this);
     }
 };
-inherits(FeedView, ListView);
+inherits(FeedComponent, Passthrough);
 
-FeedView.prototype.add = function (content) {
-    var contentView = this._createContentView(content);
-    ListView.prototype.add.call(this, contentView);
-};
+module.exports = FeedComponent;
 
-FeedView.prototype.comparator = ListView.prototype.comparators.CREATEDAT_DESCENDING;
-
-/**
- * Called automatically by the Writable base class when .write() is called
- * @private
- * @param content {Content} Content to display in the ListView
- * @param requestMore {function} A function to call when done writing, so
- *     that _write will be called again with more data
- */
-FeedView.prototype._write = function (content, requestMore) {
-    if (content.author.id === (Auth.get('livefyre') && Auth.get('livefyre').get('id'))) {
-        this.add(content);
-    } else {
-        this.queue.write(content);
-    }
-
-    requestMore();
-};
-
-FeedView.prototype._createContentView = function (content) {
-    return new ContentThreadView({
-        content: content,
-        contentViewFactory: new FeedContentViewFactory(),
-        queueInitial: this._queueInitial
-    });
-};
-
-module.exports = FeedView;
+module.exports.FeedView = FeedView;
