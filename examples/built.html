@@ -1,0 +1,20 @@
+<!doctype html>
+<script src="https://cdn.livefyre.com/Livefyre.js"></script>
+<script src="../dist/streamhub-feed.min.js"></script>
+<div id="feed"></div>
+<script>
+var feed = new (Livefyre['streamhub-feed'])({
+    el: document.getElementById('feed')
+})
+Livefyre.require([
+    'streamhub-sdk#2'],
+function (SDK) {
+    var collection = new (SDK.Collection)({
+        "network": "livefyre.com",
+        "siteId": "313878",
+        "articleId": "1",
+        "environment": "livefyre.com"
+    });
+    collection.pipe(feed);
+});
+</script>
