@@ -16,6 +16,7 @@ var FeedView = function (opts) {
     opts = opts || {};
     this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
     this.comparator = opts.comparator || this.comparator;
+    this._contentViewFactory = opts.contentViewFactory || new FeedContentViewFactory();
     hasAttachmentModal(this, opts.modal);
 
     var listOpts = $.extend({}, opts);
@@ -57,8 +58,8 @@ FeedView.prototype._write = function (content, requestMore) {
 FeedView.prototype._createContentView = function (content) {
     return new ContentThreadView({
         content: content,
-        contentViewFactory: new FeedContentViewFactory(),
-        replyContentViewFactory: new FeedContentViewFactory({ contentTypeView: FeedReplyContentView }),
+        rootContentView: this._contentViewFactory.createContentView(content),
+        contentViewFactory: new FeedContentViewFactory({ contentTypeView: FeedReplyContentView }),
         queueInitial: this._queueInitial
     });
 };

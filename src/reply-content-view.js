@@ -17,7 +17,7 @@ var FeedReplyContentView = function (opts) {
 };
 inherits(FeedReplyContentView, FeedContentView);
 
-FeedContentView.prototype._addInitialChildViews = function (opts) {
+FeedReplyContentView.prototype._addInitialChildViews = function (opts) {
     opts = opts || {};
 
     this._headerView = opts.headerView || this._headerViewFactory.createHeaderView(opts.content);
