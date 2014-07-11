@@ -4,6 +4,7 @@ var Auth = require('auth');
 var ListView = require('streamhub-sdk/views/list-view');
 var ContentThreadView = require('thread');
 var FeedContentViewFactory = require('streamhub-feed/content-view-factory');
+var FeedReplyContentView = require('streamhub-feed/reply-content-view');
 var threadViewStyles = require('less!streamhub-feed/css/style.less');
 var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
 var hasQueue = require('streamhub-sdk/views/mixins/queue-mixin');
@@ -57,6 +58,7 @@ FeedView.prototype._createContentView = function (content) {
     return new ContentThreadView({
         content: content,
         contentViewFactory: new FeedContentViewFactory(),
+        replyContentViewFactory: new FeedContentViewFactory({ contentTypeView: FeedReplyContentView }),
         queueInitial: this._queueInitial
     });
 };

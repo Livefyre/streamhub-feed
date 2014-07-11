@@ -22,6 +22,7 @@ var FeedContentViewFactory = function (opts) {
     opts = opts || {};
 
     BaseContentViewFactory.call(this, opts);
+    this._ContentTypeView = opts.contentTypeView || FeedContentView;
 };
 inherits(FeedContentViewFactory, BaseContentViewFactory);
 
@@ -67,7 +68,7 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
         replyCommand: replyCommand,
         shareCommand: shareCommand
     };
-    var contentView = new FeedContentView(contentViewOpts);
+    var contentView = new this._ContentTypeView(contentViewOpts);
 
     var sourceTypeMixins = this._getSourceTypeMixinsForContent(content);
     for (var i=0; i < sourceTypeMixins.length; i++) {
