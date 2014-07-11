@@ -10,6 +10,7 @@ var BlockAttachmentListView = require('streamhub-sdk/content/views/block-attachm
 var ContentEditorView = require('streamhub-editor/auth-editor');
 var feedContentStyles = require('less!streamhub-feed/css/style.less');
 var hasTheme = require('streamhub-sdk/content/views/mixins/theme-mixin');
+var editori18n = require('./editor-i18n');
 
 'use strict';
 
@@ -86,9 +87,11 @@ FeedContentView.prototype._addInitialChildViews = function (opts) {
     this._footerView = new ContentFooterView(opts);
     this.add(this._footerView, { render: false });
 
+    var content = opts.content;
     this._editorView = new ContentEditorView({
-        collection: opts.content.collection,
-        contentParentId: opts.content.id        
+        collection: content.collection,
+        contentParentId: content.id,
+        i18n: editori18n(content)
     });
     this.add(this._editorView, { render: false });
 };
