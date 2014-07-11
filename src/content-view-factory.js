@@ -14,6 +14,7 @@ var asFacebookContentView = require('streamhub-sdk/content/views/mixins/facebook
 var asInstagramContentView = require('streamhub-sdk/content/views/mixins/instagram-content-view-mixin');
 var AuthEditor = require('streamhub-editor/auth-editor');
 var TYPE_URNS = require('streamhub-sdk/content/types/type-urns');
+var editori18n = require('./editor-i18n');
 
 'use strict';
 
@@ -51,9 +52,11 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     var likeCommand = opts.likeCommand || this._createLikeCommand(content, opts.liker);
     var replyCommand = opts.replyCommand || this._createReplyCommand(content, opts.replyer);
     var shareCommand = opts.shareCommand || this._createShareCommand(content, opts.sharer);
+
     var editorView = opts.editorView || new AuthEditor({
         collection: content.collection,
-        contentParentId: content.id
+        contentParentId: content.id,
+        i18n: editori18n(content)
     });
 
     var contentViewOpts = {
