@@ -1,5 +1,7 @@
 # streamhub-feed
 
+[![Build Status](https://travis-ci.org/Livefyre/streamhub-feed.png)](https://travis-ci.org/Livefyre/streamhub-feed)
+
 streamhub-feed is a StreamHub App that shows social content like comments, photos, and tweets in a simple feed.
 
 ## Getting Started

@@ -9,15 +9,20 @@ require.config({
     'jasmine-html': 'lib/jasmine/lib/jasmine-core/jasmine-html',
     'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery',
     inherits: 'lib/inherits/inherits',
+    'mout': 'lib/mout/src',
+    'observer': 'lib/observer/src/observer',
     'event-emitter': 'lib/event-emitter/src/event-emitter',
-    debug: 'lib/debug/debug'
+    'debug': 'lib/debug/debug'
   },
   packages: [{
-     name: "streamhub-feed",
-     location: "./src"
+    name: "streamhub-feed",
+    location: "src"
+  },{
+    name: "streamhub-feed/styles",
+    location: "src/css"
   },{
     name: "streamhub-sdk",
-    location: "lib/streamhub-sdk/src/"
+    location: "lib/streamhub-sdk/src"
   },{
     name: "streamhub-sdk/modal",
     location: "lib/streamhub-sdk/src/modal"
@@ -32,21 +37,40 @@ require.config({
     location: 'lib/streamhub-sdk/src/content'
   },{
     name: 'streamhub-sdk-tests',
-    location: 'lib/streamhub-sdk/tests/'
+    location: 'lib/streamhub-sdk/tests'
+  },{
+    name: "auth",
+    location: "lib/auth/src"
+  },{
+    name: "livefyre-auth",
+    location: "lib/livefyre-auth/src"
   },{
     name: "stream",
     location: "lib/stream/src"
+  },{
+    name: "thread",
+    location: "lib/thread/src"
   },{
     name: "view",
     location: "lib/view/src",
     main: "view"
   },{
-    name: "auth",
-    location: "lib/auth/src"
+    name: "streamhub-editor",
+    location: "lib/streamhub-editor/src/javascript"
+  },{
+   name: 'streamhub-editor/styles',
+   location: 'lib/streamhub-editor/src/styles'
+  },{
+    name: "streamhub-editor/templates",
+    location: "lib/streamhub-editor/src/templates"
   },{
     name: "css",
     location: "lib/require-css",
     main: "css"
+  },{
+    name: "less",
+    location: "lib/require-less",
+    main: "less"
   }],
   shim: {
     jquery: {
@@ -61,6 +85,18 @@ require.config({
     },
     'jasmine-jquery': {
         deps: ['jquery', 'jasmine']
+    }
+  },
+  css: {
+    clearFileEachBuild: 'dist/streamhub-feed.min.css'
+    ,transformEach: []
+  },
+  less: {
+    browserLoad: 'dist/streamhub-feed.min',
+    paths: ['lib'],
+    relativeUrls: true,
+    modifyVars: {
+      '@icon-font-path': "\"http://cdn.livefyre.com/libs/livefyre-bootstrap/v1.1.0/fonts/\""
     }
   },
   urlArgs: "_=" +  (new Date()).getTime()
