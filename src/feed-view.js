@@ -9,6 +9,7 @@ var threadViewStyles = require('less!streamhub-feed/css/style.less');
 var hasAttachmentModal = require('streamhub-sdk/content/views/mixins/attachment-modal-mixin');
 var hasQueue = require('streamhub-sdk/views/mixins/queue-mixin');
 var sdkStyle = require('css!streamhub-sdk/css/style.css');
+var feedViewTemplate = require('hgn!streamhub-feed/templates/feed-view');
 
 'use strict';
 
@@ -19,8 +20,10 @@ var FeedView = function (opts) {
     this._contentViewFactory = opts.contentViewFactory || new FeedContentViewFactory();
     hasAttachmentModal(this, opts.modal);
 
-    var listOpts = $.extend({}, opts);
-    listOpts.autoRender = false;
+    var listOpts = $.extend({
+        template: feedViewTemplate,
+        autoRender: false
+    }, opts);
     ListView.call(this, listOpts);
     hasQueue(this, opts);
     
