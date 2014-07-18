@@ -8,7 +8,7 @@
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#rc",
     "jquery": "~1.10.2",
     "observer": "git://github.com/Livefyre/Observer.git#0.1.0",
-    "thread": "git://github.com/cheung31/thread.git#~0.0.1",
+    "thread": "git://github.com/cheung31/thread.git#~0.0.2",
     "requirejs": "~2.1.5"
   },
   "devDependencies": {
@@ -35,6 +35,7 @@
     "view": "~1.3",
     "require-css": "transformEach2",
     "base64": "~0.4.0",
-    "streamhub-sdk": "rc"
+    "streamhub-sdk": "rc",
+    "auth": "~0.2"
   }
 }

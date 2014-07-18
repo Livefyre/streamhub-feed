@@ -64,6 +64,16 @@ require.config({
     name: "streamhub-editor/templates",
     location: "lib/streamhub-editor/src/templates"
   },{
+    name: "streamhub-ui",
+    location: "lib/streamhub-ui/src"    
+  },{
+    name: "streamhub-share",  
+    location: "lib/streamhub-share/src",
+    main: "share-button.js"
+  },{
+    name: "livefyre-bootstrap",
+    location: "lib/livefyre-bootstrap/src"
+  },{
     name: "css",
     location: "lib/require-css",
     main: "css"

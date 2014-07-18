@@ -30,18 +30,18 @@ $, FeedView, Collection, Content, Auth) {
         $tokenInput.val('');
     });
 
-    var opts = {
-        "network": "livefyre.com",
-        "siteId": "313878",
-        "articleId": "1",
-        "environment": "livefyre.com"
-    };
     //var opts = {
-    //    "network": "labs.fyre.co",
-    //    "siteId": "320568",
-    //    "articleId": "myoscarphoto",
+    //    "network": "livefyre.com",
+    //    "siteId": "313878",
+    //    "articleId": "1",
     //    "environment": "livefyre.com"
     //};
+    var opts = {
+        "network": "livefyre.com",
+        siteId: '290634',
+        articleId: 'joe-test',
+        "environment": "qa-ext.livefyre.com"
+    };
 
     var listView = window.view = new FeedView({
         el: document.getElementById("listView")
