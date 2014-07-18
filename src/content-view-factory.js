@@ -138,7 +138,7 @@ FeedContentViewFactory.prototype._getSourceTypeMixinsForContent = function (cont
     for (var i=0, len=this.contentRegistry.length; i < len; i++) {
         var current = this.contentRegistry[i];
         var sameTypeUrn = content.typeUrn && (current.typeUrn === content.typeUrn);
-        if (! (sameTypeUrn || (content instanceof current.type))) {
+        if (!sameTypeUrn || !(content instanceof current.type)) {
             continue;
         }
 
