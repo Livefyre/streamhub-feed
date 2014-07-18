@@ -9,6 +9,7 @@ var ContentFooterView = require('streamhub-sdk/content/views/content-footer-view
 var TiledAttachmentListView = require('streamhub-sdk/content/views/tiled-attachment-list-view');
 var BlockAttachmentListView = require('streamhub-sdk/content/views/block-attachment-list-view');
 var AuthEditorView = require('streamhub-editor/auth-editor');
+var auth = require('auth');
 
 'use strict';
 
@@ -16,6 +17,13 @@ describe('FeedContentView', function () {
     var content,
         collection,
         contentView;
+
+    beforeEach(function () {
+        auth.delegate({
+            login: function (done) { done(); },
+            logout: function (done) { done(); }
+        });
+    });
 
     describe('construction', function () {
 
