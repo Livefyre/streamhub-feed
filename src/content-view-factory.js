@@ -52,8 +52,8 @@ FeedContentViewFactory.prototype.contentRegistry = [
     { type: LivefyreInstagramContent,
         mixins: FeedContentViewFactory.mixins.INSTAGRAM_CONTENT,
         typeUrn: TYPE_URNS.LIVEFYRE_INSTAGRAM },
-    { type: TwitterContent, mixins:
-        FeedContentViewFactory.mixins.TWITTER_CONTENT,
+    { type: TwitterContent,
+        mixins: FeedContentViewFactory.mixins.TWITTER_CONTENT,
         typeUrn: TYPE_URNS.TWITTER },
     { type: LivefyreUrlContent,
         mixins: FeedContentViewFactory.mixins.LIVEFYRE_URL_CONTENT,
@@ -138,12 +138,12 @@ FeedContentViewFactory.prototype._getSourceTypeMixinsForContent = function (cont
     for (var i=0, len=this.contentRegistry.length; i < len; i++) {
         var current = this.contentRegistry[i];
         var sameTypeUrn = content.typeUrn && (current.typeUrn === content.typeUrn);
-        if (!sameTypeUrn || !(content instanceof current.type)) {
-            continue;
+        if (sameTypeUrn) {
+            return current.mixins || [];
         }
-
-        return current.mixins || [];
     }
+
+    return [];
 };
 
 module.exports = FeedContentViewFactory;
