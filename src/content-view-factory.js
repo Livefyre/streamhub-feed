@@ -23,6 +23,8 @@ var editori18n = require('./editor-i18n');
 var FeedContentViewFactory = function (opts) {
     opts = opts || {};
 
+    this._replying = opts.replying === undefined ? true : !!opts.replying;
+
     BaseContentViewFactory.call(this, opts);
     this._ContentTypeView = opts.contentTypeView || FeedContentView;
 };
@@ -66,6 +68,10 @@ FeedContentViewFactory.prototype.contentRegistry = [
         typeUrn: TYPE_URNS.CONTENT }
 ];
 
+FeedContentViewFactory.prototype.setReplying = function (replying) {
+    this._replying = replying;
+};
+
 FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     opts = opts || {};
 
@@ -87,6 +93,9 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
         replyCommand: replyCommand,
         shareCommand: shareCommand
     };
+    if (!this._replying) {
+        contentViewOpts.replyCommand = false;
+    }
     var contentView = new this._ContentTypeView(contentViewOpts);
 
     var sourceTypeMixins = this._getSourceTypeMixinsForContent(content);

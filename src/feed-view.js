@@ -15,10 +15,19 @@ var feedViewTemplate = require('hgn!streamhub-feed/templates/feed-view');
 
 var FeedView = function (opts) {
     opts = opts || {};
-    this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
+
     this.comparator = opts.comparator || this.comparator;
+    this._queueInitial = opts.queueInitial = opts.queueInitial || 0;
+
+    this._hideReplies = opts.hideReplies === undefined ? false : !!opts.hideReplies;
+    this._replying = opts.replying === undefined ? true : !!opts.replying;
+    if (this._hideReplies) {
+        this._replying = false;
+    }
     this._contentViewFactory = opts.contentViewFactory || new FeedContentViewFactory();
-    hasAttachmentModal(this, opts.modal);
+    if (this._contentViewFactory.setReplying) {
+        this._contentViewFactory.setReplying(this._replying);
+    }
 
     var listOpts = $.extend({
         template: feedViewTemplate,
@@ -31,6 +40,8 @@ var FeedView = function (opts) {
     if (opts.autoRender) {
         this.render();
     }
+
+    hasAttachmentModal(this, opts.modal);
 };
 inherits(FeedView, ListView);
 
@@ -59,10 +70,19 @@ FeedView.prototype._write = function (content, requestMore) {
 };
 
 FeedView.prototype._createContentView = function (content) {
+    if (this._hideReplies) {
+        return this._contentViewFactory.createContentView(content, {
+            replyCommand: false
+        });
+    }
+
     return new ContentThreadView({
         content: content,
         rootContentView: this._contentViewFactory.createContentView(content),
-        contentViewFactory: new FeedContentViewFactory({ contentTypeView: FeedReplyContentView }),
+        contentViewFactory: new FeedContentViewFactory({
+            contentTypeView: FeedReplyContentView,
+            replying: this._replying
+        }),
         queueInitial: this._queueInitial
     });
 };

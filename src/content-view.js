@@ -20,6 +20,8 @@ var FeedContentView = function (opts) {
     hasTheme(this, 'content-feed');
     ContentView.call(this, opts);
 
+    this._replying = !!opts.replyCommand;
+
     if (!this.content.id) {
         this.content.once('change', function (content) {
             this._replyButton.enable();
