@@ -1,20 +1,75 @@
 <!doctype html>
+<html>
+<head>
 <script src="https://cdn.livefyre.com/Livefyre.js"></script>
 <script src="../dist/streamhub-feed.min.js"></script>
-<div id="feed"></div>
+<style>
+#editor {
+  margin: 20px 0;
+}
+
+body {
+    background-color: #eee;
+  font-family: sans-serif;
+    margin: 0 auto;
+  max-width: 640px;
+}
+</style>
+</head>
 <script>
-var feed = new (Livefyre['streamhub-feed'])({
-    el: document.getElementById('feed')
-})
+Livefyre.require(['auth-contrib#0.0.0-pre'], function (authContrib) {
+    var auth = Livefyre.auth;
+    auth.delegate(auth.createDelegate('http://admin.livefyre.com'));
+    var authLog = authContrib.createLog(auth, document.getElementById('auth-log'));
+    authContrib.createButton(auth, document.getElementById('auth-button'), authLog);
+});
+
 Livefyre.require([
+    'streamhub-input#0.3',
     'streamhub-sdk#2'],
-function (SDK) {
-    var collection = new (SDK.Collection)({
+function (Input, SDK) {
+  var collection = new (SDK.Collection)({
         "network": "livefyre.com",
         "siteId": "313878",
         "articleId": "1",
         "environment": "livefyre.com"
     });
-    collection.pipe(feed);
+
+  var contentEditorButton = new (Input.ContentEditorButton)({
+    el: document.getElementById('input-button'),
+    mediaEnabled: true
+  })
+  contentEditorButton.render();
+  contentEditorButton.pipe(collection);
+  
+    var contentEditor = new (Input.ContentEditor)({
+      el: document.getElementById('editor'),
+        mediaEnabled: true
+    });
+  contentEditor.render();
+  contentEditor.pipe(collection);
+
+  var feed = window.feed = new (Livefyre['streamhub-feed'])({
+      el: document.getElementById('wall')
+  });
+  
+   //var feed = window.feed = new Feed({
+   //    el: document.getElementById("wall")
+   //});
+  
+    collection.pipe(feed)
 });
 </script>
+<body>
+<button id="auth-button">Log in</button><div id="auth-log"></div>
+<div id="input-button"></div>
+<h1>Feed 2.0</h1>
+<p>The SDK just caught a second wind.</p>
+<ul>
+  </ul></p>
+<div id="main">
+  <div id="editor"></div>
+  <div id="wall"></div>
+</div>
+</body>
+</html>
