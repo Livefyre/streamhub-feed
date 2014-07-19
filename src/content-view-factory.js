@@ -5,6 +5,7 @@ var BaseContentViewFactory = require('streamhub-sdk/content/content-view-factory
 var Content = require('streamhub-sdk/content');
 var LivefyreContent = require('streamhub-sdk/content/types/livefyre-content');
 var LivefyreTwitterContent = require('streamhub-sdk/content/types/livefyre-twitter-content');
+var LivefyreUrlContent = require('streamhub-sdk/content/types/livefyre-content');
 var LivefyreFacebookContent = require('streamhub-sdk/content/types/livefyre-facebook-content');
 var LivefyreInstagramContent = require('streamhub-sdk/content/types/livefyre-instagram-content');
 var TwitterContent = require('streamhub-sdk/content/types/twitter-content');
@@ -12,6 +13,7 @@ var asLivefyreContentView = require('streamhub-sdk/content/views/mixins/livefyre
 var asTwitterContentView = require('streamhub-sdk/content/views/mixins/twitter-content-view-mixin');
 var asFacebookContentView = require('streamhub-sdk/content/views/mixins/facebook-content-view-mixin');
 var asInstagramContentView = require('streamhub-sdk/content/views/mixins/instagram-content-view-mixin');
+var asUrlContentView = require('streamhub-sdk/content/views/mixins/url-content-view-mixin');
 var AuthEditor = require('streamhub-editor/auth-editor');
 var TYPE_URNS = require('streamhub-sdk/content/types/type-urns');
 var editori18n = require('./editor-i18n');
@@ -21,10 +23,20 @@ var editori18n = require('./editor-i18n');
 var FeedContentViewFactory = function (opts) {
     opts = opts || {};
 
+    this._replying = opts.replying === undefined ? true : !!opts.replying;
+
     BaseContentViewFactory.call(this, opts);
     this._ContentTypeView = opts.contentTypeView || FeedContentView;
 };
 inherits(FeedContentViewFactory, BaseContentViewFactory);
+
+FeedContentViewFactory.mixins = {
+    TWITTER_CONTENT: [asTwitterContentView],
+    FACEBOOK_CONTENT: [asLivefyreContentView, asFacebookContentView],
+    INSTAGRAM_CONTENT: [asLivefyreContentView, asInstagramContentView],
+    LIVEFYRE_URL_CONTENT: [asLivefyreContentView, asUrlContentView],
+    LIVEFYRE_CONTENT: [asLivefyreContentView]
+};
 
 /**
  * The default registry for Content -> ContentView rendering.
@@ -33,19 +45,32 @@ inherits(FeedContentViewFactory, BaseContentViewFactory);
  * type function, useful for conditional view selection.).
  */
 FeedContentViewFactory.prototype.contentRegistry = [
-    { type: LivefyreTwitterContent, mixins: [asTwitterContentView],
+    { type: LivefyreTwitterContent,
+        mixins: FeedContentViewFactory.mixins.TWITTER_CONTENT,
         typeUrn: TYPE_URNS.LIVEFYRE_TWITTER },
-    { type: LivefyreFacebookContent, mixins: [asLivefyreContentView, asFacebookContentView],
+    { type: LivefyreFacebookContent,
+        mixins: FeedContentViewFactory.mixins.FACEBOOK_CONTENT,
         typeUrn: TYPE_URNS.LIVEFYRE_FACEBOOK},
-    { type: LivefyreInstagramContent, mixins: [asLivefyreContentView, asInstagramContentView],
+    { type: LivefyreInstagramContent,
+        mixins: FeedContentViewFactory.mixins.INSTAGRAM_CONTENT,
         typeUrn: TYPE_URNS.LIVEFYRE_INSTAGRAM },
-    { type: TwitterContent, mixins: [asTwitterContentView],
+    { type: TwitterContent,
+        mixins: FeedContentViewFactory.mixins.TWITTER_CONTENT,
         typeUrn: TYPE_URNS.TWITTER },
-    { type: LivefyreContent, mixins: [asLivefyreContentView],
+    { type: LivefyreUrlContent,
+        mixins: FeedContentViewFactory.mixins.LIVEFYRE_URL_CONTENT,
+        typeUrn: TYPE_URNS.LIVEFYRE_URL },
+    { type: LivefyreContent,
+        mixins: FeedContentViewFactory.mixins.LIVEFYRE_CONTENT,
         typeUrn: TYPE_URNS.LIVEFYRE },
-    { type: Content, mixins: [],
+    { type: Content,
+        mixins: [],
         typeUrn: TYPE_URNS.CONTENT }
 ];
+
+FeedContentViewFactory.prototype.setReplying = function (replying) {
+    this._replying = replying;
+};
 
 FeedContentViewFactory.prototype.createContentView = function (content, opts) {
     opts = opts || {};
@@ -68,6 +93,9 @@ FeedContentViewFactory.prototype.createContentView = function (content, opts) {
         replyCommand: replyCommand,
         shareCommand: shareCommand
     };
+    if (!this._replying) {
+        contentViewOpts.replyCommand = false;
+    }
     var contentView = new this._ContentTypeView(contentViewOpts);
 
     var sourceTypeMixins = this._getSourceTypeMixinsForContent(content);
@@ -97,15 +125,34 @@ FeedContentViewFactory.prototype._createReplyCommand = function (content, replye
 };
 
 FeedContentViewFactory.prototype._getSourceTypeMixinsForContent = function (content) {
+    if (content.typeUrn === TYPE_URNS.LIVEFYRE_URL) {
+        var typeId = content.urlContentTypeId || "";
+        typeId = typeId.toLowerCase();
+
+        //Set urn so that other bits that rely on it
+        //treat content as it should be.
+        if (typeId.indexOf("twitter.com") >= 0) {
+            return FeedContentViewFactory.mixins.TWITTER_CONTENT;
+        }
+
+        if (typeId.indexOf("facebook.com") >= 0) {
+            return FeedContentViewFactory.mixins.FACEBOOK_CONTENT;
+        }
+
+        if (typeId.indexOf("instagram.com") >= 0) {
+            return FeedContentViewFactory.mixins.INSTAGRAM_CONTENT;
+        }
+    }
+
     for (var i=0, len=this.contentRegistry.length; i < len; i++) {
         var current = this.contentRegistry[i];
         var sameTypeUrn = content.typeUrn && (current.typeUrn === content.typeUrn);
-        if (! (sameTypeUrn || (content instanceof current.type))) {
-            continue;
+        if (sameTypeUrn) {
+            return current.mixins || [];
         }
-
-        return current.mixins || [];
     }
+
+    return [];
 };
 
 module.exports = FeedContentViewFactory;

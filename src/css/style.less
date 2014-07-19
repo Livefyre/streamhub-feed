@@ -92,11 +92,9 @@
     }
 
     .content-footer {
-        & > * {
-            & * {
-                color: #999;
-            }
-        }
+        @footer-line-height: 22px;
+        line-height: @footer-line-height;
+        color: #999;
 
         .hub-content-like.hub-btn-toggle-on {
             color: @like_color;
@@ -108,7 +106,9 @@
         }
 
         .hub-btn {
+            box-sizing: content-box;
             font-size: 12px;
+            line-height: @footer-line-height;
         }
     }
 
@@ -138,6 +138,11 @@
     }
 
     // Stacked attachments
+    [data-hub-list-length='0'] {
+        .content-attachments-stacked {
+            display: none;
+        }
+    }
     .content-attachments-stacked .content-attachment-link {
         background-color: @stacked_attachments_bg_color;
         border-bottom: 1px solid rgba(0,0,0,0.15);

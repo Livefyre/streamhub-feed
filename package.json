@@ -30,7 +30,7 @@
     "postinstall": "./node_modules/bower/bin/bower install && npm run build",
     "start": "./node_modules/http-server/bin/http-server .",
     "build": "rm dist/*; ./node_modules/requirejs/bin/r.js -o ./config/build.conf.js",
-    "lessc": "./node_modules/less/bin/lessc -ru --compress src/css/style.{less,css}",
+    "lessc": "./node_modules/less/bin/lessc -ru --compress src/css/style.{less,css} --include-path=lib",
     "test": "./node_modules/karma/bin/karma start tools/karma.conf.js --singleRun"
   },
   "streamhub": {

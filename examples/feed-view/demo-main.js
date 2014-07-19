@@ -37,10 +37,10 @@ $, FeedView, Collection, Content, Auth) {
         "environment": "livefyre.com"
     };
     //var opts = {
-    //    "network": "labs.fyre.co",
-    //    "siteId": "320568",
-    //    "articleId": "myoscarphoto",
-    //    "environment": "livefyre.com"
+    //    "network": "livefyre.com",
+    //    siteId: '290634',
+    //    articleId: 'joe-test',
+    //    "environment": "qa-ext.livefyre.com"
     //};
 
     var listView = window.view = new FeedView({
