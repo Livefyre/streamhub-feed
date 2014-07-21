@@ -24,7 +24,7 @@ Now require Feed, construct, and get a Collection to pipe in
 
 ```html
 <script>
-Livefyre.require(['streamhub-feed#2.1.1', 'streamhub-sdk#2'],
+Livefyre.require(['streamhub-feed#2.12', 'streamhub-sdk#2'],
 function (Feed, SDK) {
     var feed = new Feed({
         el: document.getElementById('feed'),
