@@ -42,6 +42,65 @@ function (Feed, SDK) {
 
 Check out this [live example](http://codepen.io/gobengo/pen/gIibE)
 
+## Configuration
+
+### `comparator` (Defaults to CREATEDAT_DESCENDING)
+
+The sort order of content in the feed is determined by the comparator. The comparator option expects a comparator function that compares to Content instances.
+
+```
+var ListView = require('streamhub-sdk/views/list-view');
+
+var feed = new Feed({
+    el: document.getElementById('feed'),
+    comparator: ListView.prototype.comparators.CREATEDAT_ASCENDING
+});
+```
+
+### `queueInitial` (Defaults to 0)
+
+The number of items to display in a thread of replies before being held by queue. In the case of streamhub-feed, new content is always held in queue via a "View more posts" button. This follows the progressive disclosure interaction design pattern. To override this behavior and enable real-time content to stream in dynamically, increase queueInitial.
+
+```
+var feed = new Feed({
+    el: document.getElementById('feed'),
+    queueInitial: 5 // Take 5 new content replies to display before subsequent new content is queued by "View more posts" button.
+});
+```
+
+### `replying` (Defaults to True)
+
+Whether to enable the ability to reply to content. This effectively makes the Feed application a read-only experience.
+
+```
+var feed = new Feed({
+    el: document.getElementById('feed'),
+    replying: False // Disable replying. Reply button is hidden.
+});
+```
+
+### `hideReplies` (Defaults to True)
+
+Whether to display replies of root-level content.
+
+```
+var feed = new Feed({
+    el: document.getElementById('feed'),
+    hideReplies: False // Only show root-level content. No replies.
+});
+```
+
+### `contentViewFactory` (Defaults to streamhub-feed/content-view-factory)
+
+The factory to create views that render each Content instance.
+
+```
+var feed = new Feed({
+    el: document.getElementById('feed'),
+    contentViewFactory: new require('streamhub-sdk/content/content-view-factory')() // Use Base Content View Factory from SDK
+});
+```
+
 ## Local Development
 
 Instead of using a built version of streamhub-feed from Livefyre's CDN, you may wish to fork, develop on the repo locally, or include it in your existing JavaScript application.
