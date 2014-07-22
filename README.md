@@ -48,7 +48,7 @@ Check out this [live example](http://codepen.io/gobengo/pen/gIibE)
 
 The sort order of content in the feed is determined by the comparator. The comparator option expects a comparator function that compares to Content instances.
 
-```
+```javascript
 var ListView = require('streamhub-sdk/views/list-view');
 
 var feed = new Feed({
@@ -61,7 +61,7 @@ var feed = new Feed({
 
 The number of items to display in a thread of replies before being held by queue. In the case of streamhub-feed, new content is always held in queue via a "View more posts" button. This follows the progressive disclosure interaction design pattern. To override this behavior and enable real-time content to stream in dynamically, increase queueInitial.
 
-```
+```javascript
 var feed = new Feed({
     el: document.getElementById('feed'),
     queueInitial: 5 // Take 5 new content replies to display before subsequent new content is queued by "View more posts" button.
@@ -72,7 +72,7 @@ var feed = new Feed({
 
 Whether to enable the ability to reply to content. This effectively makes the Feed application a read-only experience.
 
-```
+```javascript
 var feed = new Feed({
     el: document.getElementById('feed'),
     replying: False // Disable replying. Reply button is hidden.
@@ -83,7 +83,7 @@ var feed = new Feed({
 
 Whether to display replies of root-level content.
 
-```
+```javascript
 var feed = new Feed({
     el: document.getElementById('feed'),
     hideReplies: False // Only show root-level content. No replies.
@@ -94,7 +94,7 @@ var feed = new Feed({
 
 The factory to create views that render each Content instance.
 
-```
+```javascript
 var feed = new Feed({
     el: document.getElementById('feed'),
     contentViewFactory: new require('streamhub-sdk/content/content-view-factory')() // Use Base Content View Factory from SDK
