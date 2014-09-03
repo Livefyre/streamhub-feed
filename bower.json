@@ -1,6 +1,6 @@
 {
   "name": "streamhub-feed",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": [
     "./src/main.js"
   ],
@@ -8,7 +8,7 @@
     "streamhub-sdk": "git://github.com/Livefyre/streamhub-sdk.git#2.12.0",
     "jquery": "~1.10.2",
     "observer": "git://github.com/Livefyre/Observer.git#0.1.0",
-    "thread": "git://github.com/cheung31/thread.git#~0.0.3",
+    "thread": "git://github.com/cheung31/thread.git#~0.0.4",
     "requirejs": "~2.1.5"
   },
   "devDependencies": {
