@@ -29,7 +29,7 @@ testb: build
 	./node_modules/karma/bin/karma start --browsers=Chrome
 
 clean:
-	rm -rf node_modules lib dist
+	rm -rf node_modules lib
 
 package: dist
 
