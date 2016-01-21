@@ -12,8 +12,6 @@ require([
 $, FeedView, Collection, Content, Auth) {
     window.auth = auth;
     var authButton = createAuthButton(auth, document.getElementById('auth-button'));
-
-    authLivefyre.plugin(auth);
     var delegate = window.delegate = livefyreAuthDelegate('http://www.livefyre.com');
     auth.delegate(delegate);
 
