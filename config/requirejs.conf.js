@@ -106,7 +106,7 @@ require.config({
     paths: ['lib'],
     relativeUrls: true,
     modifyVars: {
-      '@icon-font-path': "\"http://cdn.livefyre.com/libs/livefyre-bootstrap/v1.1.0/fonts/\""
+      '@icon-font-path': "\"https://cdn.livefyre.com/libs/livefyre-bootstrap/v1.1.0/fonts/\""
     }
   },
   urlArgs: "_=" +  (new Date()).getTime()
